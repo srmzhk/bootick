@@ -1,1 +1,1 @@
-# bootik
+# bootick
