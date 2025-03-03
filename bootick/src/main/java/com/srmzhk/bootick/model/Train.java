@@ -20,6 +20,8 @@ public class Train {
 
     String number;
 
+    int seatsAmount;
+
     double price;
 
     @ManyToOne

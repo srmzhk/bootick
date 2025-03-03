@@ -1,6 +1,6 @@
 package com.srmzhk.bootick.service.impl;
 
-import com.srmzhk.bootick.dto.SearchDto;
+import com.srmzhk.bootick.dto.RouteDto;
 import com.srmzhk.bootick.dto.TrainDto;
 import com.srmzhk.bootick.repository.TrainRepository;
 import com.srmzhk.bootick.service.ITrainService;
@@ -31,7 +31,7 @@ public class TrainService implements ITrainService {
     }
 
     @Override
-    public List<TrainDto> getTrainsForSearch(SearchDto searchData) {
+    public List<TrainDto> getTrainsForRoute(RouteDto routeDto) {
         return List.of();
     }
 

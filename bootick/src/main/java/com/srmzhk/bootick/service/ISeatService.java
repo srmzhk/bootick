@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ISeatService {
 
     List<SeatDto> addSeatsForTrain(int amount);

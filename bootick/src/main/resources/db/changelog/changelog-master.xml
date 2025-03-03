@@ -5,45 +5,45 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1740990756638-1" author="srmzhk">
+    <changeSet id="1741017346282-1" author="srmzhk">
         <createTable tableName="bookings">
-            <column autoIncrement="true" name="id" type="INT">
+            <column name="booking_id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_bookings"/>
             </column>
-            <column name="user_id" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
             <column name="booking_time" type="DATETIME"/>
             <column name="train_id" type="INT"/>
+            <column name="route_id" type="INT"/>
             <column name="from_stop_id" type="INT"/>
             <column name="to_stop_id" type="INT"/>
             <column name="seat_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1740990756638-2" author="srmzhk">
+    <changeSet id="1741017346282-2" author="srmzhk">
         <createTable tableName="routes">
-            <column autoIncrement="true" name="route_id" type="INT">
+            <column name="route_id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_routes"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
+            <column name="is_available" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
-    <changeSet id="1740990756638-3" author="srmzhk">
+    <changeSet id="1741017346282-3" author="srmzhk">
         <createTable tableName="seats">
-            <column autoIncrement="true" name="seat_id" type="INT">
+            <column name="seat_id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_seats"/>
             </column>
             <column name="seat_number" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="seat_class" type="VARCHAR(255)"/>
-            <column name="price" type="DOUBLE">
-                <constraints nullable="false"/>
-            </column>
             <column name="train_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1740990756638-4" author="srmzhk">
+    <changeSet id="1741017346282-4" author="srmzhk">
         <createTable tableName="stops">
-            <column autoIncrement="true" name="stop_id" type="INT">
+            <column name="stop_id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_stops"/>
             </column>
             <column name="station" type="VARCHAR(255)"/>
@@ -52,43 +52,54 @@
             <column name="route_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1740990756638-5" author="srmzhk">
+    <changeSet id="1741017346282-5" author="srmzhk">
         <createTable tableName="trains">
-            <column autoIncrement="true" name="train_id" type="INT">
+            <column name="train_id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_trains"/>
             </column>
             <column name="number" type="VARCHAR(255)"/>
+            <column name="seats_amount" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
             <column name="route_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1740990756638-6" author="srmzhk">
+    <changeSet id="1741017346282-6" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="from_stop_id" baseTableName="bookings"
                                  constraintName="FK_BOOKINGS_ON_FROM_STOP" referencedColumnNames="stop_id"
                                  referencedTableName="stops"/>
     </changeSet>
-    <changeSet id="1740990756638-7" author="srmzhk">
+    <changeSet id="1741017346282-7" author="srmzhk">
+        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="bookings"
+                                 constraintName="FK_BOOKINGS_ON_ROUTE" referencedColumnNames="route_id"
+                                 referencedTableName="routes"/>
+    </changeSet>
+    <changeSet id="1741017346282-8" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="seat_id" baseTableName="bookings" constraintName="FK_BOOKINGS_ON_SEAT"
                                  referencedColumnNames="seat_id" referencedTableName="seats"/>
     </changeSet>
-    <changeSet id="1740990756638-8" author="srmzhk">
+    <changeSet id="1741017346282-9" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="to_stop_id" baseTableName="bookings"
                                  constraintName="FK_BOOKINGS_ON_TO_STOP" referencedColumnNames="stop_id"
                                  referencedTableName="stops"/>
     </changeSet>
-    <changeSet id="1740990756638-9" author="srmzhk">
+    <changeSet id="1741017346282-10" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="train_id" baseTableName="bookings"
                                  constraintName="FK_BOOKINGS_ON_TRAIN" referencedColumnNames="train_id"
                                  referencedTableName="trains"/>
     </changeSet>
-    <changeSet id="1740990756638-10" author="srmzhk">
+    <changeSet id="1741017346282-11" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="train_id" baseTableName="seats" constraintName="FK_SEATS_ON_TRAIN"
                                  referencedColumnNames="train_id" referencedTableName="trains"/>
     </changeSet>
-    <changeSet id="1740990756638-11" author="srmzhk">
+    <changeSet id="1741017346282-12" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="stops" constraintName="FK_STOPS_ON_ROUTE"
                                  referencedColumnNames="route_id" referencedTableName="routes"/>
     </changeSet>
-    <changeSet id="1740990756638-12" author="srmzhk">
+    <changeSet id="1741017346282-13" author="srmzhk">
         <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="trains" constraintName="FK_TRAINS_ON_ROUTE"
                                  referencedColumnNames="route_id" referencedTableName="routes"/>
     </changeSet>

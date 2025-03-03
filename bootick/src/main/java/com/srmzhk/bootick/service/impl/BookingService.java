@@ -2,7 +2,7 @@ package com.srmzhk.bootick.service.impl;
 
 import com.srmzhk.bootick.dto.BookingDto;
 import com.srmzhk.bootick.dto.RouteDto;
-import com.srmzhk.bootick.model.Train;
+import com.srmzhk.bootick.dto.TrainDto;
 import com.srmzhk.bootick.repository.BookingRepository;
 import com.srmzhk.bootick.service.IBookingService;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +37,12 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public List<BookingDto> getAvailableBookingsForRoute(RouteDto route) {
+    public List<BookingDto> getBookingsForRoute(RouteDto route) {
         return List.of();
     }
 
     @Override
-    public List<BookingDto> getAvailableBookingsForTrain(Train train) {
+    public List<BookingDto> getBookingsForTrain(TrainDto train) {
         return List.of();
     }
 }
