@@ -1,19 +1,19 @@
 package com.srmzhk.bootick.service;
 
-import com.srmzhk.bootick.dto.RouteDto;
+import com.srmzhk.bootick.dto.SearchDto;
 import com.srmzhk.bootick.dto.TrainDto;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 public interface ITrainService {
 
-    TrainDto addTrain(TrainDto train);
+    TrainDto addTrain(TrainDto trainDto);
 
-    void deleteTrain(int train_id);
+    void deleteTrain(int trainId);
 
-    TrainDto updateTrain(TrainDto train);
+    TrainDto updateTrain(TrainDto trainDto);
 
-    List<TrainDto> getTrainsForRoute(RouteDto routeDto);
+    List<TrainDto> getTrainsForSearch(SearchDto searchData);
 
     List<TrainDto> getAllTrains();
 }

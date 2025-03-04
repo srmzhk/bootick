@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RouteStopDto {
-    int stopId;
+    int id;
     String station;
     LocalDateTime arrivalTime;
-    LocalDateTime departureTime;
-    RouteDto route;
+    int position;
+    int trainId;
 }

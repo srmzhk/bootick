@@ -4,14 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RouteDto {
-    int routeId;
-    String name;
-    boolean isAvailable;
-    List<RouteStopDto> stops;
+public class ErrorDto {
+    private String errorCode;
+    private String message;
 }

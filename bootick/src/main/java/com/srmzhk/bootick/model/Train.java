@@ -16,7 +16,8 @@ public class Train {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int trainId;
+    @Column(name = "train_id")
+    int id;
 
     String number;
 
@@ -24,9 +25,8 @@ public class Train {
 
     double price;
 
-    @ManyToOne
-    @JoinColumn(name = "route_id")
-    Route route;
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<RouteStop> stops;
 
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Seat> seats;

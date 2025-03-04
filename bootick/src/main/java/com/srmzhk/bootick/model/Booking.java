@@ -16,7 +16,8 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int bookingId;
+    @Column(name = "booking_id")
+    int id;
 
     String phoneNumber;
 
@@ -25,10 +26,6 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "train_id")
     Train train;
-
-    @ManyToOne
-    @JoinColumn(name = "route_id")
-    Route route;
 
     @ManyToOne
     @JoinColumn(name = "from_stop_id")

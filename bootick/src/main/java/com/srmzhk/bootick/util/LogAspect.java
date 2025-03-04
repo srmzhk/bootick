@@ -20,7 +20,6 @@ public class LogAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
 
-        // Логируем информацию о классе, методе и аргументах
         log.info("Class: {} | Method: {} | Request: {}", className, methodName, Arrays.toString(args));
 
         // Выполняем метод

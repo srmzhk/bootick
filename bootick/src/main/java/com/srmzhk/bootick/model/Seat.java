@@ -14,9 +14,12 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int seatId;
+    @Column(name = "seat_id")
+    int id;
 
     int seatNumber;
+
+    boolean isAvailable;
 
     @ManyToOne
     @JoinColumn(name = "train_id")

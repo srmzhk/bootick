@@ -10,11 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDto {
-    int bookingId;
+    int id;
     String phoneNumber;
     LocalDateTime bookingTime;
     TrainDto train;
-    RouteDto route;
     RouteStopDto fromStop;
     RouteStopDto toStop;
     SeatDto seat;

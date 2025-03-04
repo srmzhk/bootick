@@ -16,16 +16,16 @@ public class RouteStop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int stopId;
+    @Column(name = "stop_id")
+    int id;
 
     String station;
 
+    int position;
+
     LocalDateTime arrivalTime;
 
-    LocalDateTime departureTime;
-
     @ManyToOne
-    @JoinColumn(name = "route_id")
-    Route route;
-
+    @JoinColumn(name = "train_id")
+    Train train;
 }

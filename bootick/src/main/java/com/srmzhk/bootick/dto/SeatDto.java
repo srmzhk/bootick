@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatDto {
-    int seatId;
+    int id;
     int seatNumber;
-    TrainDto train;
+    boolean isAvailable;
+    int trainId;
 }

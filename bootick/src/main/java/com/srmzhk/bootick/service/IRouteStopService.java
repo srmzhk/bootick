@@ -1,20 +1,19 @@
 package com.srmzhk.bootick.service;
 
-import com.srmzhk.bootick.dto.RouteDto;
 import com.srmzhk.bootick.dto.RouteStopDto;
-import org.springframework.stereotype.Service;
+import com.srmzhk.bootick.dto.TrainDto;
 
 import java.util.List;
 
 public interface IRouteStopService {
 
-    RouteStopDto addRouteStop(RouteStopDto routeStop);
+    RouteStopDto createRouteStop(RouteStopDto routeStopDto);
 
-    void deleteRouteStop(int stop_id);
+    void deleteRouteStop(int stopId);
 
-    RouteStopDto updateRouteStop(RouteStopDto routeStop);
+    RouteStopDto updateRouteStop(RouteStopDto routeStopDto);
 
-    List<RouteStopDto> getRouteStopsForRoute(RouteDto route);
+    List<RouteStopDto> getRouteStopsForTrain(int trainId);
 
     List<RouteStopDto> getAllRouteStops();
 

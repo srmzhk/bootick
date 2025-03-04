@@ -1,18 +1,13 @@
 package com.srmzhk.bootick.service;
 
-import com.srmzhk.bootick.dto.BookingDto;
-import com.srmzhk.bootick.dto.RouteDto;
 import com.srmzhk.bootick.dto.SeatDto;
-import org.springframework.stereotype.Service;
+import com.srmzhk.bootick.dto.TrainDto;
 
 import java.util.List;
 
 public interface ISeatService {
 
-    List<SeatDto> addSeatsForTrain(int amount);
+    List<SeatDto> addSeatsForTrain(TrainDto trainDto);
 
-    List<SeatDto> getAvailableSeatsForRoute(RouteDto route);
-
-    SeatDto updateSeat(BookingDto bookingData);
-
+    SeatDto updateSeat(SeatDto seatDto);
 }
