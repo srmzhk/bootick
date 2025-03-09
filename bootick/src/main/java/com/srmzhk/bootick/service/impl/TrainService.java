@@ -1,9 +1,10 @@
 package com.srmzhk.bootick.service.impl;
 
-import com.srmzhk.bootick.dto.SearchDto;
-import com.srmzhk.bootick.dto.TrainDto;
+import com.srmzhk.bootick.dto.*;
 import com.srmzhk.bootick.exception.ItemAlreadyExistException;
 import com.srmzhk.bootick.exception.ItemNotFoundException;
+import com.srmzhk.bootick.model.RouteStop;
+import com.srmzhk.bootick.model.Seat;
 import com.srmzhk.bootick.model.Train;
 import com.srmzhk.bootick.repository.TrainRepository;
 import com.srmzhk.bootick.service.ITrainService;
@@ -11,6 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +25,8 @@ public class TrainService implements ITrainService {
 
     private final TrainRepository trainRepository;
     private final ModelMapper modelMapper;
+    private final SeatService seatService;
+    private final RouteStopService routeStopService;
 
     @Override
     public TrainDto addTrain(TrainDto trainDto) {
@@ -29,7 +36,12 @@ public class TrainService implements ITrainService {
 
         Train train = modelMapper.map(trainDto, Train.class);
         train = trainRepository.save(train);
-        return modelMapper.map(train, TrainDto.class);
+
+        TrainDto trainResponse = modelMapper.map(train, TrainDto.class);
+        List<SeatDto> seats = seatService.addSeatsForTrain(trainResponse);
+        trainResponse.setSeats(seats);
+
+        return trainResponse;
     }
 
     @Override
@@ -52,18 +64,14 @@ public class TrainService implements ITrainService {
     }
 
     @Override
-    public List<TrainDto> getTrainsForSearch(SearchDto searchData) {
-
-        List<TrainDto> trains =  trainRepository
-                .findTrainsBetweenStationsOnDate(searchData.getFromStop(), searchData.getToStop(), searchData.getDate())
-                .stream()
-                .map(train -> modelMapper.map(train, TrainDto.class))
-                .toList();
+    public List<SearchTrainDto> getTrainsForSearch(SearchDto searchData) {
+        List<Train> trains = trainRepository
+                .findTrainsBetweenStationsOnDate(searchData.getFromStop(), searchData.getToStop(), searchData.getDate());
 
         if (trains.isEmpty())
             throw new ItemNotFoundException();
 
-        return trains;
+        return initSearchTrainDto(trains, searchData);
     }
 
     @Override
@@ -73,5 +81,44 @@ public class TrainService implements ITrainService {
                 .stream()
                 .map(train -> modelMapper.map(train, TrainDto.class))
                 .toList();
+    }
+
+    @Override
+    public TrainDto getTrainById(int id) {
+        Train train = trainRepository.findById(id)
+                .orElseThrow(ItemNotFoundException::new);
+
+        return modelMapper.map(train, TrainDto.class);
+    }
+
+    private List<SearchTrainDto> initSearchTrainDto(List<Train> trains, SearchDto searchData) {
+        List<SearchTrainDto> searchTrains = new ArrayList<>();
+        for (Train train : trains) {
+            SearchTrainDto searchTrainDto = new SearchTrainDto();
+            RouteStopDto fromStop = routeStopService
+                    .getRouteStopForStation(train.getStops(), searchData.getFromStop());
+            LocalDateTime dateTimeFrom = fromStop.getDate().atTime(fromStop.getTime());
+
+            RouteStopDto toStop = routeStopService
+                    .getRouteStopForStation(train.getStops(), searchData.getToStop());
+            LocalDateTime dateTimeTo = toStop.getDate().atTime(toStop.getTime());
+
+            long travelTime = Duration.between(dateTimeFrom, dateTimeTo).toMinutes();
+
+            int availableSeats = seatService
+                    .getAvailableSeatsForSearch(train, fromStop.getPosition(), toStop.getPosition())
+                    .size();
+
+            searchTrainDto.setTrainId(train.getId());
+            searchTrainDto.setPrice(train.getPrice());
+            searchTrainDto.setNumber(train.getNumber());
+            searchTrainDto.setFromStop(fromStop);
+            searchTrainDto.setToStop(toStop);
+            searchTrainDto.setAvailableSeats(availableSeats);
+            searchTrainDto.setTravelTime(travelTime);
+
+            searchTrains.add(searchTrainDto);
+        }
+        return searchTrains;
     }
 }

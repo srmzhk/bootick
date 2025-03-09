@@ -20,7 +20,7 @@ public interface TrainRepository extends JpaRepository<Train, Integer> {
     WHERE rs1.station = :fromStation 
       AND rs2.station = :toStation 
       AND rs1.position < rs2.position
-      AND FUNCTION('DATE', rs1.arrivalTime) = :selectedDate
+      AND FUNCTION('DATE', rs1.date) = :selectedDate
 """)
     List<Train> findTrainsBetweenStationsOnDate(
             @Param("fromStation") String from,

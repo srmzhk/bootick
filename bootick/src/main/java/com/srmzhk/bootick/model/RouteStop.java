@@ -4,14 +4,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "stops")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "train")
 public class RouteStop {
 
     @Id
@@ -23,7 +27,9 @@ public class RouteStop {
 
     int position;
 
-    LocalDateTime arrivalTime;
+    LocalDate date;
+
+    LocalTime time;
 
     @ManyToOne
     @JoinColumn(name = "train_id")

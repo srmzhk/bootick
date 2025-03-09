@@ -13,7 +13,7 @@ import java.util.Arrays;
 @Slf4j
 public class LogAspect {
 
-    @Around("execution(* com.srmzhk.bootick..*(..))")
+    @Around("execution(* com.srmzhk.bootick..*(..)) && !execution(* com.srmzhk.bootick.repository..*(..))")
     public Object logControllerMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         // Получаем имя класса и метода
         String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
@@ -35,7 +35,10 @@ public class LogAspect {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-        log.error("Exception occurred in Class: {} | Method: {} | Exception: {}", className, methodName, exception.getMessage(), exception);
+        log.error("Exception occurred in Class: {} | Method: {} | Exception: {}", className, methodName, exception.getMessage());
+
+        // for stackTraceExceptions
+        // log.error("Exception occurred in Class: {} | Method: {} | Exception: {}", className, methodName, exception.getMessage(), exception);
     }
 
     @Before("execution(* com.srmzhk.bootick.service.*.*(..))")

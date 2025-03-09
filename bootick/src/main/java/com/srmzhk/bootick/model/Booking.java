@@ -19,7 +19,7 @@ public class Booking {
     @Column(name = "booking_id")
     int id;
 
-    String phoneNumber;
+    String phone;
 
     LocalDateTime bookingTime;
 

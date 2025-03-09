@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="2025-03-08-01" author="srmzhk">
+        <addColumn tableName="stops">
+            <column name="date" type="DATE"/>
+            <column name="time" type="TIME"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2025-03-08-02" author="srmzhk">
+        <update tableName="stops">
+            <column name="date" valueComputed="CAST(arrival_time AS DATE)"/>
+            <column name="time" valueComputed="CAST(arrival_time AS TIME)"/>
+        </update>
+    </changeSet>
+
+    <changeSet id="2025-03-08-03" author="srmzhk">
+        <dropColumn tableName="stops" columnName="arrival_time"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -15,6 +15,6 @@ public class TrainDto {
     String number;
     double price;
     int seatsAmount;
-    List<RouteStopDto> routeStops;
+    List<RouteStopDto> stops;
     List<SeatDto> seats;
 }

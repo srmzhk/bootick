@@ -86,5 +86,14 @@
         <addForeignKeyConstraint baseColumnNames="train_id" baseTableName="stops" constraintName="FK_STOPS_ON_TRAIN"
                                  referencedColumnNames="train_id" referencedTableName="trains"/>
     </changeSet>
+    <changeSet id="1741046975871-11" author="srmzhk">
+        <renameColumn tableName="bookings" oldColumnName="phone_number" newColumnName="phone" columnDataType="VARCHAR(255)"/>
+    </changeSet>
+
+    <include file="db/changelog/2025-03-08-update-route-stop.xml"/>
+
+    <changeSet id="1741046975871-12" author="srmzhk">
+        <dropColumn tableName="seats" columnName="is_available"/>
+    </changeSet>
 
 </databaseChangeLog>

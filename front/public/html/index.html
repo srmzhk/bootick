@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="icon" href="../img/letter.png" type="image/png">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Russo+One&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>Bootick</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo"><a href="index.html"><img src="../img/logo.png"></a></div>
+        <div class="header-buttons">
+            <div class="profile"><img src="../img/cancel.png" alt="">Отменить бронь</div>
+            <a href="https://t.me/srmzhk"><div class="support"><img src="../img/faq.png" alt="">Поддержка</div></a>
+            <div class="currency"><img src="../img/world.png" alt="">BYN</div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Тут бронируют дешёвые чыгуначныя билеты</h1>
+        <div class="search-container">
+            <div class="search-items">
+                <div>
+                    <select id="from" class="searchable" style="width: 200px;">
+                    </select>
+                </div>
+    
+                <div>
+                    <select id="to" class="searchable" style="width: 200px;">
+                    </select>
+                </div>
+                    <div>
+                        <input type="date" id="date" name="date" min="2025-01-01" max="2025-12-31">
+                    </div>
+            </div>
+            
+            <div class="search-btn">Найти билеты</div>
+        </div>
+
+        <div id="train-template" class="train-card" style="display: none;">
+            <div class="card-train-number">
+                №101
+            </div>
+            <hr>
+            <div class="time-container">
+                <div class="time-from">
+                    <h2>20:50</h2>
+                    <p>Минск-Пасс.</p>
+                </div>
+                <div class="time">
+                    1 ч 24 мин
+                </div>
+                <div class="time-to">
+                    <h2>22:14</h2>
+                    <p>Молодечно</p>
+                </div>
+            </div>
+            <hr>
+            <div class="train-info">
+                <p>Свободных мест: <span class="train-seats-amount">30</span></p>
+                <p>Стоимость: <span class="train-price">5.43 BYN</span></p>
+            </div>
+            <div class="order-btn">Забронировать</div>
+        </div>
+        
+        <div id="train-list" class="train-list-container">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>

@@ -25,13 +25,20 @@ public class RouteStopService implements IRouteStopService {
     @Override
     public RouteStopDto createRouteStop(RouteStopDto routeStopDto) {
         Optional<RouteStop> existedRouteStop = routeStopRepository
-                .findByStationAndTrainIdAndArrivalTime(
+                .findByStationAndTrainIdAndDateAndTime(
                         routeStopDto.getStation(),
                         routeStopDto.getTrainId(),
-                        routeStopDto.getArrivalTime()
+                        routeStopDto.getDate(),
+                        routeStopDto.getTime()
                 );
 
         if (existedRouteStop.isPresent())
+            throw new ItemAlreadyExistException();
+
+        List<RouteStop> stopsWithSamePosition = routeStopRepository
+                .findByTrainIdAndPosition(routeStopDto.getTrainId(), routeStopDto.getPosition());
+
+        if (!stopsWithSamePosition.isEmpty())
             throw new ItemAlreadyExistException();
 
         RouteStop routeStop = modelMapper.map(routeStopDto, RouteStop.class);
@@ -74,7 +81,36 @@ public class RouteStopService implements IRouteStopService {
     public List<RouteStopDto> getAllRouteStops() {
         return routeStopRepository.findAll()
                 .stream()
+                .distinct()
                 .map(route -> modelMapper.map(route, RouteStopDto.class))
                 .toList();
+    }
+
+    @Override
+    public RouteStopDto getRouteStopById(int id) {
+        RouteStop routeStop = routeStopRepository.findById(id)
+                .orElseThrow(ItemNotFoundException::new);
+
+        return modelMapper.map(routeStop, RouteStopDto.class);
+    }
+
+    @Override
+    public List<String> getRouteStopsForSymbols(String symbols) {
+        List<String> routeStops = routeStopRepository.findDistinctStationsByStartingWith(symbols);
+
+        if (routeStops.isEmpty())
+            throw new ItemNotFoundException();
+
+        return routeStops;
+    }
+
+    @Override
+    public RouteStopDto getRouteStopForStation(List<RouteStop> stops, String station) {
+        RouteStop routeStop = stops.stream()
+                .filter(stop -> stop.getStation().equals(station))
+                .findFirst()
+                .orElseThrow(ItemNotFoundException::new);
+
+        return modelMapper.map(routeStop, RouteStopDto.class);
     }
 }

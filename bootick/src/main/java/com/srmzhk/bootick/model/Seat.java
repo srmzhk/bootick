@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "seats")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "train")
 public class Seat {
 
     @Id
@@ -18,8 +20,6 @@ public class Seat {
     int id;
 
     int seatNumber;
-
-    boolean isAvailable;
 
     @ManyToOne
     @JoinColumn(name = "train_id")

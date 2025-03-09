@@ -21,6 +21,12 @@ public class RouteStopController {
         return ResponseEntity.ok(routeStops);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<String>> getRouteStopsForSymbols(@RequestParam String symbols) {
+        List<String> routeStops = routeStopService.getRouteStopsForSymbols(symbols);
+        return ResponseEntity.ok(routeStops);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<RouteStopDto>> getRouteStopsForTrain(@PathVariable int id) {
         List<RouteStopDto> routeStops = routeStopService.getRouteStopsForTrain(id);
@@ -39,7 +45,7 @@ public class RouteStopController {
         return ResponseEntity.ok(routeStop);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteRouteStop(@PathVariable int id) {
         routeStopService.deleteRouteStop(id);
         return ResponseEntity.ok("Success");

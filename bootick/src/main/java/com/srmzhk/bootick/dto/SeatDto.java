@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class SeatDto {
     int id;
     int seatNumber;
-    boolean isAvailable;
     int trainId;
 }

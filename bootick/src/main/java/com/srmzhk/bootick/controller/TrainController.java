@@ -1,6 +1,7 @@
 package com.srmzhk.bootick.controller;
 
 import com.srmzhk.bootick.dto.SearchDto;
+import com.srmzhk.bootick.dto.SearchTrainDto;
 import com.srmzhk.bootick.dto.TrainDto;
 import com.srmzhk.bootick.repository.TrainRepository;
 import com.srmzhk.bootick.service.ITrainService;
@@ -16,7 +17,6 @@ import java.util.List;
 public class TrainController {
 
     private final ITrainService trainService;
-    private final TrainRepository trainRepository;
 
     @GetMapping("/all")
     public ResponseEntity<List<TrainDto>> getAllTrains() {
@@ -25,8 +25,8 @@ public class TrainController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<TrainDto>> getTrainsFromSearch(@RequestBody SearchDto searchData) {
-        List<TrainDto> trains = trainService.getTrainsForSearch(searchData);
+    public ResponseEntity<List<SearchTrainDto>> getTrainsFromSearch(@RequestBody SearchDto searchData) {
+        List<SearchTrainDto> trains = trainService.getTrainsForSearch(searchData);
         return ResponseEntity.ok(trains);
     }
 
@@ -36,7 +36,7 @@ public class TrainController {
         return ResponseEntity.ok(train);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTrain(@PathVariable int id) {
         trainService.deleteTrain(id);
         return ResponseEntity.ok("Success");

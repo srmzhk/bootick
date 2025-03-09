@@ -21,9 +21,10 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    @DeleteMapping("/cancel/{id}")
-    public ResponseEntity<String> cancelBooking(@PathVariable int id) {
-        bookingService.cancelBooking(id);
+    @DeleteMapping("/cancel")
+    public ResponseEntity<String> cancelBooking(@RequestParam("bookingNumber") int bookingNumber,
+                                                @RequestParam("phoneNumber") String phoneNumber) {
+        bookingService.cancelBooking(bookingNumber, phoneNumber);
         return ResponseEntity.ok("Success");
     }
 
