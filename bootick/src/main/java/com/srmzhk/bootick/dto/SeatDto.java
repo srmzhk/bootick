@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeatDto {
     int id;
-    int seatNumber;
     int trainId;
 }

@@ -23,19 +23,19 @@ public class Booking {
 
     LocalDateTime bookingTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "train_id")
     Train train;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "from_stop_id")
     RouteStop fromStop;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "to_stop_id")
     RouteStop toStop;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seat_id")
     Seat seat;
 

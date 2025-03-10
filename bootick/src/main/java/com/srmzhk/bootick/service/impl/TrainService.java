@@ -57,7 +57,16 @@ public class TrainService implements ITrainService {
         Train train = trainRepository.findById(trainDto.getId())
                 .orElseThrow(ItemNotFoundException::new);
 
-        modelMapper.map(trainDto, train);
+        Optional<Train> existedTrain = trainRepository.findByNumber(trainDto.getNumber());
+
+        if (existedTrain.isPresent()) {
+            if (train.getId() != existedTrain.get().getId())
+                throw new ItemAlreadyExistException();
+        }
+
+        updateTrainSeatsAmount(train, trainDto.getSeatsAmount());
+        train.setNumber(trainDto.getNumber());
+        train.setPrice(trainDto.getPrice());
 
         Train updatedTrain = trainRepository.save(train);
         return modelMapper.map(updatedTrain, TrainDto.class);
@@ -120,5 +129,30 @@ public class TrainService implements ITrainService {
             searchTrains.add(searchTrainDto);
         }
         return searchTrains;
+    }
+
+    private void updateTrainSeatsAmount(Train train, int newSeatsAmount) {
+        train.setSeatsAmount(newSeatsAmount);
+
+        if (newSeatsAmount > train.getSeats().size()) {
+            int difference = newSeatsAmount - train.getSeats().size();
+
+            for (int i = 0; i < difference; i++) {
+                Seat newSeat = new Seat();
+                newSeat.setTrain(train);
+                train.getSeats().add(newSeat);
+            }
+        }
+        else if (newSeatsAmount < train.getSeats().size()) {
+            int difference = train.getSeats().size() - newSeatsAmount;
+
+            for (int i = 0; i < difference; i++) {
+                Seat seatToRemove = train.getSeats().get(train.getSeats().size() - 1);
+                seatToRemove.setTrain(null);
+                train.getSeats().remove(seatToRemove);
+            }
+        }
+
+        trainRepository.save(train);
     }
 }

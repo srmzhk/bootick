@@ -1,7 +1,6 @@
 package com.srmzhk.bootick.service.impl;
 
 import com.srmzhk.bootick.dto.RouteStopDto;
-import com.srmzhk.bootick.dto.TrainDto;
 import com.srmzhk.bootick.exception.ItemAlreadyExistException;
 import com.srmzhk.bootick.exception.ItemNotFoundException;
 import com.srmzhk.bootick.model.RouteStop;
@@ -10,7 +9,6 @@ import com.srmzhk.bootick.service.IRouteStopService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.RouteMatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +23,9 @@ public class RouteStopService implements IRouteStopService {
     @Override
     public RouteStopDto createRouteStop(RouteStopDto routeStopDto) {
         Optional<RouteStop> existedRouteStop = routeStopRepository
-                .findByStationAndTrainIdAndDateAndTime(
+                .findByStationAndTrainId(
                         routeStopDto.getStation(),
-                        routeStopDto.getTrainId(),
-                        routeStopDto.getDate(),
-                        routeStopDto.getTime()
+                        routeStopDto.getTrainId()
                 );
 
         if (existedRouteStop.isPresent())
@@ -56,13 +52,26 @@ public class RouteStopService implements IRouteStopService {
 
     @Override
     public RouteStopDto updateRouteStop(RouteStopDto routeStopDto) {
-        RouteStop routeStop = routeStopRepository.findById(routeStopDto.getId())
-                .orElseThrow(ItemNotFoundException::new);
+        Optional<RouteStop> existedRouteStop = routeStopRepository
+                .findByStationAndTrainId(
+                        routeStopDto.getStation(),
+                        routeStopDto.getTrainId()
+                );
 
-        modelMapper.map(routeStop, RouteStopDto.class);
+        if (existedRouteStop.isPresent())
+            throw new ItemAlreadyExistException();
 
-        RouteStop updatedRouteStop = routeStopRepository.save(routeStop);
-        return modelMapper.map(updatedRouteStop, RouteStopDto.class);
+        List<RouteStop> stopsWithSamePosition = routeStopRepository
+                .findByTrainIdAndPosition(routeStopDto.getTrainId(), routeStopDto.getPosition());
+
+        if (!stopsWithSamePosition.isEmpty()) {
+            if (stopsWithSamePosition.getFirst().getId() != routeStopDto.getId())
+                throw new ItemAlreadyExistException();
+        }
+
+        RouteStop routeStop = modelMapper.map(routeStopDto, RouteStop.class);
+        routeStop = routeStopRepository.save(routeStop);
+        return modelMapper.map(routeStop, RouteStopDto.class);
     }
 
     @Override

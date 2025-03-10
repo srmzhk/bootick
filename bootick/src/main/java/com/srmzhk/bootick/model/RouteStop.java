@@ -31,7 +31,7 @@ public class RouteStop {
 
     LocalTime time;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "train_id")
     Train train;
 }

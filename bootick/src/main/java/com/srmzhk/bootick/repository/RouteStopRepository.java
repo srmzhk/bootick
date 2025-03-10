@@ -28,7 +28,7 @@ public interface RouteStopRepository extends JpaRepository<RouteStop, Integer> {
 
     List<RouteStop> findByTrainIdAndPosition(int trainId, int position);
 
-    Optional<RouteStop> findByStationAndTrainIdAndDateAndTime(String station, int trainId, LocalDate date, LocalTime time);
+    Optional<RouteStop> findByStationAndTrainId(String station, int trainId);
 
     Optional<RouteStop> findByTrainIdAndStation(int trainId, String station);
 }

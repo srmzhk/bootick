@@ -124,6 +124,10 @@ function renderTrainCards(trains) {
                                 customClass: {
                                     confirmButton: 'custom-confirm-btn'
                                 }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
                             });
                         },
                         error: function(xhr) {
@@ -224,7 +228,7 @@ $(document).ready(function() {
                 renderTrainCards(response);
             },
             error: function(xhr) {
-                var errorResponse = JSON.parse(xhr.responseText); // Преобразуем ответ в объект
+                var errorResponse = JSON.parse(xhr.responseText);
         
                 if (errorResponse.errorCode === "ITEM_NOT_FOUND") {
                     Swal.fire({

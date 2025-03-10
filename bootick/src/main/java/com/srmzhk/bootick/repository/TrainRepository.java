@@ -28,6 +28,7 @@ public interface TrainRepository extends JpaRepository<Train, Integer> {
             @Param("selectedDate") LocalDate selectedDate
     );
 
-
     Optional<Train> findByNumber(String number);
+
+    Optional<Train> findByIdAndNumber(int id, String number);
 }

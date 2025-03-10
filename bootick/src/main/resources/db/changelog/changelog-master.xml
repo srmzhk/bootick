@@ -96,4 +96,8 @@
         <dropColumn tableName="seats" columnName="is_available"/>
     </changeSet>
 
+    <changeSet id="1741046975871-13" author="srmzhk">
+        <dropColumn tableName="seats" columnName="seat_number"/>
+    </changeSet>
+
 </databaseChangeLog>

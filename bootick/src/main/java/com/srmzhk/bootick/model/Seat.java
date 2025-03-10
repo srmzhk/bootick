@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table(name = "seats")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "train")
+@ToString(exclude = {"train", "bookings"})
 public class Seat {
 
     @Id
@@ -19,10 +21,11 @@ public class Seat {
     @Column(name = "seat_id")
     int id;
 
-    int seatNumber;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "train_id")
     Train train;
+
+    @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Booking> bookings;
 
 }

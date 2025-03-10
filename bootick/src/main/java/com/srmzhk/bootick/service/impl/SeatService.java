@@ -29,7 +29,6 @@ public class SeatService implements ISeatService {
         Train train = modelMapper.map(trainDto, Train.class);
         for (int i = 1; i <= trainDto.getSeatsAmount(); i++) {
             Seat seat = new Seat();
-            seat.setSeatNumber(i);
             seat.setTrain(train);
             seats.add(seat);
         }
