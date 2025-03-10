@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"stops", "seats"})
+@ToString(exclude = {"stops", "seats", "bookings"})
 public class Train {
 
     @Id
@@ -33,5 +33,8 @@ public class Train {
 
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Seat> seats;
+
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Booking> bookings;
 
 }

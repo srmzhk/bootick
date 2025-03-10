@@ -21,7 +21,7 @@ public class Seat {
     @Column(name = "seat_id")
     int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "train_id")
     Train train;
 

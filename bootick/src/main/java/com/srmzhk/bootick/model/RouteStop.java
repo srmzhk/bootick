@@ -9,13 +9,14 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "stops")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "train")
+@ToString(exclude = {"train", "bookings"})
 public class RouteStop {
 
     @Id
@@ -31,7 +32,10 @@ public class RouteStop {
 
     LocalTime time;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "train_id")
     Train train;
+
+    @OneToMany(mappedBy = "toStop", cascade = CascadeType.REMOVE)
+    List<Booking> bookings;
 }
